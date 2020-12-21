@@ -1,0 +1,12 @@
+.navbar {
+  width: 100vw;
+  background: #fff;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  &__main {
+    height: 44Px;
+    line-height: 44Px;
+    text-align: center;
+  }
+}

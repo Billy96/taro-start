@@ -1,0 +1,19 @@
+// 变量须先加载下面才可以用，页面级和组件的需要单独引入变量
+@import "./assets/css/var.scss";
+@import "./assets/css/common.scss";
+@import "~taro-ui/dist/style/index.scss";
+
+html, body, page {
+	background: #f7f7f7;
+	color: #333;
+	font-size: 32px;
+	line-height: 32px;
+}
+
+div, 
+view, 
+scroll-view, 
+taro-view-core, 
+taro-scroll-view-core {
+	box-sizing: border-box;
+}

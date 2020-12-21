@@ -1,0 +1,17 @@
+.tabbar-page {
+  width: 100vw;
+  height: calc(100vh - #{$tabbar-height});
+}
+
+// flex
+@mixin flex-init($justify-content) {
+  display: flex;
+  align-items: center;
+  justify-content: $justify-content;
+}
+.flexst {@include flex-init(flex-start);}
+.flexbt {@include flex-init(space-between);}
+.flexct {@include flex-init(center);}
+.flexed {@include flex-init(flex-end);}
+.flexwp {flex-wrap: wrap;}
+.flexcl {flex-direction: column;}
