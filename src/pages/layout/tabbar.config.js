@@ -30,9 +30,9 @@ export default [
     selectedIconPath: homeActive,
     color,
     selectedColor,
-    current: false,
+    current: true,
     component: <Home key="home" />,
-    load: false
+    load: true
   },
   {
     name: '测试',
@@ -41,9 +41,9 @@ export default [
     selectedIconPath: homeActive,
     color,
     selectedColor,
-    current: true,
+    current: false,
     component: <Test key="test" />,
-    load: true
+    load: false
   },
   {
     name: '我的',

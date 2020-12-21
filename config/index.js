@@ -18,6 +18,9 @@ switch (process.env.TARO_ENV) {
   case 'tt':
     outputRoot = 'dist/tt';
     break;
+  case 'jd':
+    outputRoot = 'dist/jd';
+    break;
   case 'h5':
     outputRoot = 'dist/h5';
     break;

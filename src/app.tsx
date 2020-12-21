@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Taro from '@tarojs/taro';
 import { Provider } from 'react-redux';
-
 import configStore from './store';
-
 import './app.scss';
 
 const store = configStore();
@@ -12,6 +10,11 @@ class App extends Component {
   componentDidMount () {
     const { statusBarHeight } = Taro.getSystemInfoSync();
     Taro.$navbarHeight = `${(statusBarHeight || 0) + 44}px`;
+
+    // 不同环境登录
+    const env = Taro.getEnv();
+    const login = require(`./utils/login/${env}.js`);
+    login();
   }
 
   componentDidShow () {}
