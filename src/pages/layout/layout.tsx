@@ -12,14 +12,17 @@ const Layout = () => {
 
   const listenTabbar = (key) => {
     let _tabbarData = cloneDeep(tabbarData);
+    let _index = 0;
     _tabbarData.forEach((item, index) => {
       item.current = false;
       if (item.key === key) {
         item.current = true;
+        _index = index;
         if (tabbarIndex === index) return
         setTabBarIndex(index);
       }
     })
+    if (tabbarIndex === _index) return
     setTabBarData(_tabbarData);
   }
 
@@ -27,7 +30,7 @@ const Layout = () => {
     <Fragment>
       <View className="main">
         <View 
-          className="main__view flexbt" 
+          className="main__view flexst" 
           style={{
             width: `${tabbarData.length * 100}vw`,
             transform: `translateX(-${tabbarIndex * 100}vw)`

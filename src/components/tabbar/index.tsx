@@ -25,8 +25,8 @@ const Tabbar = ({ data, onListenTabbar }: params) => {
               width: '50%',
               color: `${item.current ? item.selectedColor : item.color}`
             }} 
-            onClick={() => onListenTabbar(item.key)}
-            key={item.key}
+            onClick={() => onListenTabbar(item.key)} 
+            key={item.key} 
           >
             <Image 
               className="tabbar__item_icon" 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Taro from '@tarojs/taro';
-import { ScrollView, View } from '@tarojs/components';
+import { ScrollView, View, Navigator } from '@tarojs/components';
 import Navbar from '@/components/navbar';
 import ajax from '@/utils/ajax';
 import './user.scss';
@@ -21,6 +21,7 @@ const User = () => {
         scrollY
       >
         我的...
+        <Navigator url="/pages/demo/exif/exif" style={{marginTop: '20px'}}>exif演示</Navigator>
       </ScrollView>
     </View>
   )

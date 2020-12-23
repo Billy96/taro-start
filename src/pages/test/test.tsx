@@ -20,7 +20,7 @@ const Test = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log('test home')
+    console.log('load test')
     pageAdd();
     return () => {}
   }, [])

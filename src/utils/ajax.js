@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro';
 const apiPath = 
   process.env.NODE_ENV === 'development' 
     ? 'http://api.faepai.com/index.php/Web' 
-    : '';
+    : 'http://api.faepai.com/index.php/Web';
 
 const ajax = ({ path, data, method = 'POST' }) => 
 new Promise((resolve, reject) => {
@@ -25,7 +25,8 @@ new Promise((resolve, reject) => {
         reject(`——————  ${res.data.status}：${res.data.message} ——————`)
       }
     },
-    fail: () => {
+    fail: (err) => {
+      console.error(err)
       Taro.showToast({
         title: '请求失败，请检查网络。',
         icon: 'none'
