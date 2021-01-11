@@ -16,7 +16,7 @@ const User = () => {
       <Navbar title="我的" />
       <ScrollView 
         style={{
-          height: `calc(100% - ${Taro['$navbarHeight']})`
+          height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
         }} 
         scrollY
       >

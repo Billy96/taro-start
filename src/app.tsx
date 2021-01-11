@@ -8,13 +8,9 @@ const store = configStore();
 
 class App extends Component {
   componentDidMount () {
-    const { statusBarHeight } = Taro.getSystemInfoSync();
-    Taro.$navbarHeight = `${(statusBarHeight || 0) + 44}px`;
-
-    // 不同环境登录
-    const env = Taro.getEnv();
-    const login = require(`./utils/login/${env}.js`);
-    login();
+    const { statusBarHeight, safeArea } = Taro.getSystemInfoSync();
+    Taro.$navbarHeight = `${(statusBarHeight || 0) + 44}px`; // 导航栏高度（导航 + 设备状态）
+    Taro.$safeAreaHeight = `${safeArea?.top || 0}px`; // 全面屏底部的安全区高度
   }
 
   componentDidShow () {}

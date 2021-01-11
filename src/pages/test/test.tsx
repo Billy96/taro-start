@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import Taro from '@tarojs/taro';
-import { View } from '@tarojs/components';
+import { View, Navigator } from '@tarojs/components';
 import Navbar from '@/components/navbar';
 import VirtualList from '@tarojs/components/virtual-list';
 import ajax from '@/utils/ajax';
@@ -9,9 +9,13 @@ import './test.scss';
 
 const Row = memo(({ index, style, data }: any) => {
   return (
-    <View className="item" style={style}>
+    <Navigator 
+      className="item" 
+      style={style} 
+      url="/pages/detail/detail" 
+    >
       {data[index]?.object_title}____{index+1}
-    </View>
+    </Navigator>
   );
 })
 
@@ -57,7 +61,7 @@ const Test = () => {
       <Navbar title="虚拟滚动" />
       <View
         style={{
-          height: `calc(100% - ${Taro['$navbarHeight']})`
+          height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
         }} 
       >
         <VirtualList 

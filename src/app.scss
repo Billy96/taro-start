@@ -14,6 +14,8 @@ div,
 view, 
 scroll-view, 
 taro-view-core, 
-taro-scroll-view-core {
+taro-scroll-view-core,
+taro-navigator-core {
+	display: block;
 	box-sizing: border-box;
 }

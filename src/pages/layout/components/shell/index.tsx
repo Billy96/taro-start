@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
+import { View } from '@tarojs/components';
 
 type domVal = {
   key: String | Number | null
@@ -31,10 +32,10 @@ export default ({ dom, data }: params) => {
   }, [data])
 
   return (
-    <Fragment>
+    <View style={{width: '100vw'}}>
       {
         load && dom
       }
-    </Fragment>
+    </View>
   )
 }

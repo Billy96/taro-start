@@ -22,4 +22,5 @@ import '@tarojs/taro';
 
 declare module '@tarojs/taro' {
   export let $navbarHeight: String;
+  export let $safeAreaHeight: String;
 }

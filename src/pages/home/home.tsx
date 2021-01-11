@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
-import { ScrollView, View, Image, Text } from '@tarojs/components';
+import { ScrollView, View, Image, Text, Navigator } from '@tarojs/components';
 import { AtLoadMore } from 'taro-ui';
 import Navbar from '@/components/navbar';
 import cloneDeep from 'lodash/cloneDeep';
@@ -52,21 +52,25 @@ const Home = () => {
       <ScrollView 
         className="scroll-view" 
         style={{
-          height: `calc(100% - ${Taro['$navbarHeight']})`
+          height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
         }} 
         scrollY 
         onScrollToLower={pageAdd} 
       >
         {
           data.object.map((item: any) => 
-            <View className="item" key={item.auction_id}>
+            <Navigator 
+              className="item" 
+              key={item.auction_id} 
+              url="/pages/detail/detail" 
+            >
               <Image className="img" src={`${item.image}?x-oss-process=image/resize,w_200,h_200`} />
               <View className="flexst" style={{float: 'right'}}>
                 <View>1234</View>
                 <View>8888</View>
               </View>
               <Text>你好</Text>
-            </View>
+            </Navigator>
           )
         }
         <AtLoadMore 

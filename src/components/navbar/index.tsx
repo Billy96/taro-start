@@ -1,35 +1,50 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import './index.scss';
+import { AtIcon } from 'taro-ui';
 
 type params = {
   title?: String
   fixed?: Boolean
+  back?: Boolean
 }
 
-const Navbar = ({ title = 'taro多端模版', fixed }: params) => {
+const Navbar = ({ title = 'taro多端模版', fixed, back = false }: params) => {
   const [style, setStyle] = useState({});
-
-  const navbarRef: any = useRef(null);
 
   useEffect(() => {
     setStyle({
-      height: Taro['$navbarHeight'],
+      height: Taro.$navbarHeight,
       position: fixed ? 'fixed' : 'static'
     })
-    console.log('navbarHeight===', navbarRef.current.clientHeight)
     return () => {}
   }, [])
+
+  const goback = () => {
+    Taro.navigateBack({
+      delta: 1
+    })
+  }
 
   return (
     <View 
       className="navbar flexbt flexcl"
       style={style} 
-      ref={navbarRef}
     >
       <View></View>
       <View className="navbar__main">{title}</View>
+      {
+        back && 
+        <View className="navbar__goback" style={{height: `${Taro.$navbarHeight}`}}>
+          <AtIcon 
+            className="navbar__goback_icon" 
+            value="chevron-left" 
+            color="#333" 
+            onClick={goback}
+          />
+        </View>
+      }
     </View>
   )
 }

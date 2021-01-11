@@ -1,7 +1,8 @@
 export default {
   pages: [
+    'pages/landing/landing',
     'pages/layout/layout',
-    'pages/demo/exif/exif'
+    'pages/detail/detail',
   ],
   window: {
     backgroundTextStyle: 'light',

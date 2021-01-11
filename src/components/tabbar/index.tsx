@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
+import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
@@ -8,15 +9,17 @@ type params = {
 }
 
 const Tabbar = ({ data, onListenTabbar }: params) => {
-  const tabbarRef: any = useRef(null);
-
   useEffect(() => {
-    console.log('tabbarHeight===', tabbarRef.current.clientHeight)
     return () => {}
   }, [])
 
   return (
-    <View className="tabbar flexbt" ref={tabbarRef}>
+    <View 
+      className="tabbar flexbt" 
+      style={{
+        paddingBottom: `${Taro.$safeAreaHeight}`,
+      }}
+    >
       {
         data.map((item: any) => 
           <View 
