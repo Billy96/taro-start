@@ -4,16 +4,21 @@ const ajax = require('@/utils/ajax');
 /** 
  * 微信小程序
 */
-module.exports = function () {
+module.exports = function (event) {
   console.log('weapp-login')
   Taro.login({
     success: function (res) {
+      event();
       if (res.code) {
         setTimeout(() => {
+          Taro.setStorageSync('userInfo', {
+            nickName: '🌟🌟🌟',
+            sex: '👨'
+          });
           Taro.reLaunch({
             url: '/pages/layout/layout'
           })
-        }, 1000)
+        }, 1500)
         return
         ajax.default({
           path: '',
@@ -21,9 +26,7 @@ module.exports = function () {
             code: res.code
           }
         }).then(res => {
-          Taro.reLaunch({
-            url: '/pages/layout/layout'
-          })
+          
         })
       } else {
         console.log('登录失败！' + res.errMsg)

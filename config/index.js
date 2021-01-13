@@ -31,7 +31,7 @@ switch (process.env.TARO_ENV) {
     outputRoot = 'dist/rn';
     break;
   default:
-    outputRoot = 'dist';
+    outputRoot = 'dist/fail';
 }
 
 const config = {
@@ -104,7 +104,8 @@ const config = {
   alias: {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
-    '@/assets': path.resolve(__dirname, '..', 'src/assets')
+    '@/assets': path.resolve(__dirname, '..', 'src/assets'),
+    '@/store': path.resolve(__dirname, '..', 'src/store'),
   }
 }
 
