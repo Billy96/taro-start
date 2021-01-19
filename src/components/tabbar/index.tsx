@@ -24,6 +24,7 @@ const Tabbar = ({ data, onListenTabbar }: params) => {
         data.map((item: any) => 
           <View 
             className="tabbar__item flexct flexcl" 
+            hoverClass="click-hover"
             style={{
               width: '50%',
               color: `${item.current ? item.selectedColor : item.color}`

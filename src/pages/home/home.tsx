@@ -14,6 +14,7 @@ const Home = () => {
     total_count: 0
   });
   const [page, setPage] = useState(1);
+  const pageSize = 10;
 
   useEffect(() => {
     console.log('load home')
@@ -26,7 +27,7 @@ const Home = () => {
       path: '/Newofficial/searchObject', 
       data: {
         page, 
-        perpage: 10
+        perpage: pageSize
       }
     }).then(res => {
       if (data && data.object.length > 0) {
@@ -42,8 +43,8 @@ const Home = () => {
 
   const pageAdd = () => {
     let _page = page
-    if (data.object.length >= data.total_count) return
-    setPage(_page + 1)
+    if (page * pageSize >= data.total_count) return
+    setPage(++_page)
   }
 
   return (

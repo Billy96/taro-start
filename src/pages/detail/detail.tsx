@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View } from '@tarojs/components';
 import Navbar from '@/components/navbar';
 
-const User = () => {
+const Detail = () => {
   useEffect(() => {
     console.log('load detail')
     return () => {}
@@ -11,9 +11,9 @@ const User = () => {
   return (
     <View className="tabbar-page">
       <Navbar title="详情" back />
-      123
+      
     </View>
   )
 }
 
-export default User;
+export default Detail;

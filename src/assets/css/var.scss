@@ -1,5 +1,12 @@
-$tabbar-height: 100px;
+// tabbar样式
+$tabbarHeight: 100px;
+$tabbarColor: #969DAA;
+$tabbarSelectedColor: #333;
 
-// :export {
-//   tabbar-height: $tabbar-height;
-// }
+
+
+:export {
+  tabbarHeight: $tabbarHeight;
+  tabbarColor: $tabbarColor;
+  tabbarSelectedColor: $tabbarSelectedColor;
+}

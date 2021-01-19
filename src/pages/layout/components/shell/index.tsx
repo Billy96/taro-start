@@ -33,9 +33,7 @@ export default ({ dom, data }: params) => {
 
   return (
     <View style={{width: '100vw'}}>
-      {
-        load && dom
-      }
+      {load && dom}
     </View>
   )
 }

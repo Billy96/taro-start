@@ -1,6 +1,10 @@
 .tabbar-page {
   width: 100vw;
-  height: calc(100vh - #{$tabbar-height});
+  height: calc(100vh - #{$tabbarHeight});
+}
+
+.click-hover {
+  opacity: 0.6;
 }
 
 // flex

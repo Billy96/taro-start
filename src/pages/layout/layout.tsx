@@ -2,13 +2,13 @@ import React, { useState, Fragment } from 'react';
 import { View } from '@tarojs/components';
 import './layout.scss';
 import Tabbar from '@/components/tabbar';
-import tabbarDataInit from './tabbar.config';
+import tabbarDataInit from '../../tabbar.config';
 import cloneDeep from 'lodash/cloneDeep';
 import Shell from './components/shell';
 
 const Layout = () => {
   const [tabbarData, setTabBarData] = useState(tabbarDataInit);
-  const [tabbarIndex, setTabBarIndex] = useState(0);
+  const [tabbarIndex, setTabBarIndex] = useState(1);
 
   const listenTabbar = (key) => {
     let _tabbarData = cloneDeep(tabbarData);

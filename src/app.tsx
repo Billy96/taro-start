@@ -9,8 +9,10 @@ const store = configStore();
 class App extends Component {
   componentDidMount () {
     const { statusBarHeight, safeArea } = Taro.getSystemInfoSync();
-    Taro.$navbarHeight = `${(statusBarHeight || 0) + 44}px`; // 导航栏高度（导航 + 设备状态）
-    Taro.$safeAreaHeight = `${safeArea?.top || 0}px`; // 全面屏底部的安全区高度
+    // 导航栏高度（导航 + 设备状态）
+    Taro.$navbarHeight = `${(statusBarHeight || 0) + 44}px`;
+    // 全面屏底部的安全区高度，以iphone 8为界简单的做了适配
+    Taro.$safeAreaHeight = `${safeArea?.top > 20 ? safeArea?.top : 0}px`;
   }
 
   componentDidShow () {}

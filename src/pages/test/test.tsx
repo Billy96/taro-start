@@ -1,81 +1,91 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Taro from '@tarojs/taro';
-import { View, Navigator } from '@tarojs/components';
+import { View, ScrollView } from '@tarojs/components';
 import Navbar from '@/components/navbar';
-import VirtualList from '@tarojs/components/virtual-list';
 import ajax from '@/utils/ajax';
-
+import cloneDeep from 'lodash/cloneDeep';
 import './test.scss';
 
-const Row = memo(({ index, style, data }: any) => {
-  return (
-    <Navigator 
-      className="item" 
-      style={style} 
-      url="/pages/detail/detail" 
-    >
-      {data[index]?.object_title}____{index+1}
-    </Navigator>
-  );
-})
-
 const Test = () => {
+  const [data, setData] = useState({
+    object: [],
+    total_count: 0
+  });
   const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
+  const pageSize = 10;
+
+  const scrollRef = useRef();
+
+
+  const itemHeight = 100; // 每项高度
+
 
   useEffect(() => {
     console.log('load test')
-    pageAdd();
+    console.log('scrollRef=', document.getElementById('scroll'))
+    getList();
     return () => {}
-  }, [])
+  }, [page])
 
-  const pageAdd = (reload = true) => {
+  const getList = () => {
     ajax({
       path: '/Newofficial/searchObject', 
       data: {
         page, 
-        perpage: 10
+        perpage: pageSize
       }
     }).then(res => {
-      if (reload) {
-        setData(res.object);
+      if (data && data.object.length > 0) {
+        const _data = cloneDeep(data);
+        _data.object = _data.object.concat(res.object);
+        _data.total_count = res.total_count;
+        setData(_data);
       } else {
-        setTimeout(() => {
-          setData(data.concat(res.object));
-          setPage(page + 1);
-        }, 1000)
+        setData(res);
       }
     })
   }
 
-  const listenScroll = (scrollDirection, scrollOffset) => {
-    if (scrollDirection === 'forward' && 
-        scrollOffset >= ((data.length - 5) * 100)
-    ) {
-      pageAdd(false);
+  const pageAdd = () => {
+    let _page = page
+    if (page * pageSize >= data.total_count) return
+    setPage(++_page)
+  }
+
+  const listenScroll = (e) => {
+    const top = e.detail.scrollTop, bottom = pageSize * itemHeight;
+    
+    
+    // 触顶
+    if (top === 0) {
+      console.log('top')
+    }
+    // 触底
+    if  (bottom === top) {
+      console.log('bottom')
     }
   }
 
   return (
     <View className="tabbar-page">
-      <Navbar title="虚拟滚动" />
-      <View
+      <Navbar title="测试" />
+      <ScrollView
+        id="scroll" 
+        className="list" 
         style={{
           height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
         }} 
+        scrollY 
+        onScroll={listenScroll} 
+        onScrollToLower={pageAdd} 
+        ref={scrollRef}
       >
-        <VirtualList 
-          height={500} // 列表的高度
-          width='100%' // 列表的宽度
-          itemData={data} // 渲染列表的数据
-          itemCount={data.length} // 渲染列表的长度
-          itemSize={100} // 列表单项的高度
-          onScroll={({ scrollDirection, scrollOffset }) => listenScroll(scrollDirection, scrollOffset)}
-        >
-          {/* 列表单项组件，这里只能传入一个组件 */}
-          {Row}
-        </VirtualList>
-      </View>
+        {
+          data.object.map((_, index) => 
+            <View style={{height: `${itemHeight}px`}}>{index}</View>
+          )
+        }
+      </ScrollView>
     </View>
   )
 }

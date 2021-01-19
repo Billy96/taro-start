@@ -7,6 +7,7 @@ const apiPath =
 
 const ajax = ({ path, data, method = 'POST' }) => 
 new Promise((resolve, reject) => {
+  console.time(`请求${path}耗时：`)
   Taro.request({
     url: `${apiPath}${path}`,
     data,
@@ -15,18 +16,20 @@ new Promise((resolve, reject) => {
     },
     method,
     success: (res) => {
-      if (res.data.status === 200) {
+      console.timeEnd(`请求${path}耗时：`)
+      if (res.data?.status === 200) {
+        console.log('😄请求成功：', res.data.data)
         resolve(res.data.data);
       } else {
+        console.log('😤请求失败：', res.data)
         Taro.showToast({
-          title: `${res.data.message}`,
+          title: `${res.data?.message}`,
           icon: 'none'
         })
-        reject(`——————  ${res.data.status}：${res.data.message} ——————`)
       }
     },
     fail: (err) => {
-      console.error(err)
+      console.error('😵请求出错：', err)
       Taro.showToast({
         title: '请求失败，请检查网络。',
         icon: 'none'
