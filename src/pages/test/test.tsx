@@ -14,15 +14,12 @@ const Test = () => {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
-  const scrollRef = useRef();
-
-
+  const loadingRef = useRef(), itemRef = useRef([]);
   const itemHeight = 100; // 每项高度
 
 
   useEffect(() => {
     console.log('load test')
-    console.log('scrollRef=', document.getElementById('scroll'))
     getList();
     return () => {}
   }, [page])
@@ -39,8 +36,14 @@ const Test = () => {
         const _data = cloneDeep(data);
         _data.object = _data.object.concat(res.object);
         _data.total_count = res.total_count;
+        _data.object.forEach((item: any, index) => {
+          item.c_id = index + 1;
+        })
         setData(_data);
       } else {
+        res.object.forEach((item, index) => {
+          item.c_id = index + 1;
+        })
         setData(res);
       }
     })
@@ -52,39 +55,68 @@ const Test = () => {
     setPage(++_page)
   }
 
-  const listenScroll = (e) => {
-    const top = e.detail.scrollTop, bottom = pageSize * itemHeight;
-    
-    
-    // 触顶
-    if (top === 0) {
-      console.log('top')
-    }
-    // 触底
-    if  (bottom === top) {
-      console.log('bottom')
-    }
+  const setRef = (dom) => {
+    // @ts-ignore
+    itemRef.current.push(dom);
   }
+  
+  useEffect(() => {
+    let intersectionObserver;
+    if (process.env.TARO_ENV === 'h5') {
+      intersectionObserver = new IntersectionObserver((entries) => {
+        if (data.object.length > 0) {
+
+          // 窗口可视数据条目数
+          // const len = entries.filter(item => item.isIntersecting).length;
+          const len = 7;
+
+          entries.forEach(item => {
+            const { target: { className }, isIntersecting } = item;
+            const node = className.split(' ')[0];
+            if (node === 'loading' && isIntersecting) {
+              console.log('loading 出现')
+              pageAdd()
+            }
+            if (node === 'item' && isIntersecting) {
+              console.log('item', item.target.id.split('-')[1], item)
+              item.target['style'] = "background: red";
+              intersectionObserver.unobserve(item.target);
+            }
+          })
+        }
+      });
+      intersectionObserver.observe(loadingRef.current);
+      itemRef.current.forEach(item => {
+        intersectionObserver.observe(item);
+      })
+    }
+    return () => {}
+  }, [data])
+
+  
 
   return (
     <View className="tabbar-page">
       <Navbar title="测试" />
       <ScrollView
-        id="scroll" 
         className="list" 
         style={{
           height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
         }} 
         scrollY 
-        onScroll={listenScroll} 
-        onScrollToLower={pageAdd} 
-        ref={scrollRef}
       >
         {
           data.object.map((_, index) => 
-            <View style={{height: `${itemHeight}px`}}>{index}</View>
+            <View 
+              id={`item-${index}`} 
+              className="item" 
+              style={{height: `${itemHeight}px`}} 
+              key={`item-${index}`} 
+              ref={setRef}
+            >{index}</View>
           )
         }
+        <View className="loading" ref={loadingRef}>加载中...</View>
       </ScrollView>
     </View>
   )

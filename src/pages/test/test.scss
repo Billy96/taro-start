@@ -1,3 +1,14 @@
 .list {
-  background: red;
+  background: white;
+}
+
+.item {
+  transition: all 1s;
+}
+
+.loading {
+  height: 100Px;
+  text-align: center;
+  line-height: 100Px;
+  color: red;
 }
