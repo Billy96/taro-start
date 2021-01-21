@@ -4,7 +4,7 @@ import { View } from '@tarojs/components';
 import './index.scss';
 import { AtIcon } from 'taro-ui';
 
-type params = {
+interface params {
   title?: String
   fixed?: Boolean
   back?: Boolean

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View } from '@tarojs/components';
 
-type domVal = {
+interface domVal {
   key: String | Number | null
 }
 
-type dataVal = {
+interface dataVal {
   key: String
   current: Boolean
   load: Boolean
 }
 
-type params = {
+interface params {
   dom: domVal
   data: Array<dataVal>
 }

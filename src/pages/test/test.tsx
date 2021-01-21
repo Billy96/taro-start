@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Taro from '@tarojs/taro';
 import { View, ScrollView } from '@tarojs/components';
 import Navbar from '@/components/navbar';
+import LazyImg from '@/components/lazyImg';
 import ajax from '@/utils/ajax';
 import cloneDeep from 'lodash/cloneDeep';
 import './test.scss';
@@ -36,14 +37,8 @@ const Test = () => {
         const _data = cloneDeep(data);
         _data.object = _data.object.concat(res.object);
         _data.total_count = res.total_count;
-        _data.object.forEach((item: any, index) => {
-          item.c_id = index + 1;
-        })
         setData(_data);
       } else {
-        res.object.forEach((item, index) => {
-          item.c_id = index + 1;
-        })
         setData(res);
       }
     })
@@ -79,7 +74,10 @@ const Test = () => {
             }
             if (node === 'item' && isIntersecting) {
               console.log('item', item.target.id.split('-')[1], item)
-              item.target['style'] = "background: red";
+              // const imgNode:any = item.target.querySelector('.img');
+              // // if (imgNode['data-img']) {
+              // //   imgNode.style = `background: url(${imgNode['data-img']}) no-repeat;background-size: 100% 100%;`;
+              // // }
               intersectionObserver.unobserve(item.target);
             }
           })
@@ -106,14 +104,19 @@ const Test = () => {
         scrollY 
       >
         {
-          data.object.map((_, index) => 
+          data.object.map((item: any, index) => 
             <View 
               id={`item-${index}`} 
               className="item" 
               style={{height: `${itemHeight}px`}} 
               key={`item-${index}`} 
               ref={setRef}
-            >{index}</View>
+            >
+              <LazyImg 
+                name={`img-${index}`}
+                url={item.image} 
+              />
+            </View>
           )
         }
         <View className="loading" ref={loadingRef}>加载中...</View>

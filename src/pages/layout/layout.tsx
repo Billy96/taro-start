@@ -8,7 +8,7 @@ import Shell from './components/shell';
 
 const Layout = () => {
   const [tabbarData, setTabBarData] = useState(tabbarDataInit);
-  const [tabbarIndex, setTabBarIndex] = useState(1);
+  const [tabbarIndex, setTabBarIndex] = useState(0);
 
   const listenTabbar = (key) => {
     let _tabbarData = cloneDeep(tabbarData);

@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-type params = {
+interface params {
   data: Array<Object>
   onListenTabbar: Function
 }
 
 const Tabbar = ({ data, onListenTabbar }: params) => {
-  useEffect(() => {
-    return () => {}
-  }, [])
-
   return (
     <View 
       className="tabbar flexbt" 
