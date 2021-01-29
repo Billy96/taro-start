@@ -1,22 +1,30 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef, Fragment } from 'react';
 import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import './index.scss';
 
+/**
+ * @param {
+ *  parentName必须是独有的类名
+ * }
+ * */ 
 interface params {
   url: String
-  name: any
+  name: String
+  parentName: String
 }
 
-const LazyImg = ({ url, name }: params) => {
+const LazyImg = ({ url, name, parentName }: params) => {
+  const env = process.env.TARO_ENV;
   const imgRef = useRef();
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     Taro.nextTick(() => {
-      Taro.createSelectorQuery().select('.img')
+      Taro.createSelectorQuery().select('.lazy-img')
         .boundingClientRect()
         .exec(() => {
-          switch(process.env.TARO_ENV) {
+          switch(env) {
             case 'weapp':
               intersectionObserverByWeapp()
               break;
@@ -33,15 +41,9 @@ const LazyImg = ({ url, name }: params) => {
   const intersectionObserverByWeapp = () => {
     const page = Taro.getCurrentPages()[0];
     let intersectionObserver = Taro.createIntersectionObserver(page);
-    /**
-     * .list必须是独有的类名，且必须是变量
-     * */ 
-    intersectionObserver.relativeTo('.list').observe(`.${name}`, (entries) => {
+    intersectionObserver.relativeTo(`.${parentName}`).observe(`.${name}`, (entries) => {
       if (entries.intersectionRatio > 0 && url) {
-        console.log(11111)
-        /**
-         * 写懒加载的样式
-         * */ 
+        setShow(true);
         intersectionObserver.disconnect();
       }
     });
@@ -62,7 +64,23 @@ const LazyImg = ({ url, name }: params) => {
   }
 
   return (
-    <View className={`img ${name}`} ref={imgRef} />
+    <Fragment>
+      
+      {
+        env === 'weapp' ? 
+        <View 
+          className={`lazy-img ${name}`} 
+          style={{
+            background: show ? 
+              `url(${url}) no-repeat;background-size: 100% 100%` : 
+              '#f7f7f7'
+          }} 
+        /> : 
+        env === 'h5' ?
+        <View className="lazy-img" ref={imgRef} /> :
+        <View className="lazy-img no-compatible" />
+      }
+    </Fragment>
   )
 }
 

@@ -13,16 +13,16 @@ const Home = () => {
     object: [],
     total_count: 0
   });
-  const [page, setPage] = useState(1);
+  let [page, setPage] = useState(1);
   const pageSize = 10;
 
   useEffect(() => {
     console.log('load home')
-    getList();
+    getList(page > 1 ? false : true);
     return () => {}
   }, [page])
 
-  const getList = () => {
+  const getList = (reload = true) => {
     ajax({
       path: '/Newofficial/searchObject', 
       data: {
@@ -30,21 +30,16 @@ const Home = () => {
         perpage: pageSize
       }
     }).then(res => {
-      if (data && data.object.length > 0) {
-        const _data = cloneDeep(data);
-        _data.object = _data.object.concat(res.object);
-        _data.total_count = res.total_count;
-        setData(_data);
-      } else {
-        setData(res);
+      if (!reload) {
+        res.object = data.object.concat(res.object);
       }
+      setData(res);
     })
   }
 
   const pageAdd = () => {
-    let _page = page
     if (page * pageSize >= data.total_count) return
-    setPage(++_page)
+    setPage(++page)
   }
 
   return (

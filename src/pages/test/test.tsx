@@ -12,20 +12,16 @@ const Test = () => {
     object: [],
     total_count: 0
   });
-  const [page, setPage] = useState(1);
+  let [page, setPage] = useState(1);
   const pageSize = 10;
-
-  const loadingRef = useRef(), itemRef = useRef([]);
-  const itemHeight = 100; // 每项高度
-
 
   useEffect(() => {
     console.log('load test')
-    getList();
+    getList(page > 1 ? false : true);
     return () => {}
   }, [page])
 
-  const getList = () => {
+  const getList = (reload = true) => {
     ajax({
       path: '/Newofficial/searchObject', 
       data: {
@@ -33,75 +29,85 @@ const Test = () => {
         perpage: pageSize
       }
     }).then(res => {
-      if (data && data.object.length > 0) {
-        const _data = cloneDeep(data);
-        _data.object = _data.object.concat(res.object);
-        _data.total_count = res.total_count;
-        setData(_data);
-      } else {
-        setData(res);
+      if (!reload) {
+        res.object = data.object.concat(res.object);
       }
+      setData(res);
     })
   }
 
   const pageAdd = () => {
-    let _page = page
     if (page * pageSize >= data.total_count) return
-    setPage(++_page)
+    setPage(++page)
   }
 
+  // 虚拟滚动相关
+  const env = process.env.TARO_ENV;
+  const itemHeight = 100; // 每项高度
+  const itemRef:any = useRef([]);
   const setRef = (dom) => {
-    // @ts-ignore
     itemRef.current.push(dom);
   }
   
   useEffect(() => {
-    let intersectionObserver;
-    if (process.env.TARO_ENV === 'h5') {
-      intersectionObserver = new IntersectionObserver((entries) => {
-        if (data.object.length > 0) {
-
-          // 窗口可视数据条目数
-          // const len = entries.filter(item => item.isIntersecting).length;
-          const len = 7;
-
-          entries.forEach(item => {
-            const { target: { className }, isIntersecting } = item;
-            const node = className.split(' ')[0];
-            if (node === 'loading' && isIntersecting) {
-              console.log('loading 出现')
-              pageAdd()
-            }
-            if (node === 'item' && isIntersecting) {
-              console.log('item', item.target.id.split('-')[1], item)
-              // const imgNode:any = item.target.querySelector('.img');
-              // // if (imgNode['data-img']) {
-              // //   imgNode.style = `background: url(${imgNode['data-img']}) no-repeat;background-size: 100% 100%;`;
-              // // }
-              intersectionObserver.unobserve(item.target);
+    if (data.object.length > 0) {
+      Taro.nextTick(() => {
+        Taro.createSelectorQuery().select('.item')
+          .boundingClientRect()
+          .exec(() => {
+            switch(env) {
+              case 'weapp':
+                intersectionObserverByWeapp()
+                break;
+              case 'h5':
+                intersectionObserverByH5();
+                break;
             }
           })
-        }
-      });
-      intersectionObserver.observe(loadingRef.current);
-      itemRef.current.forEach(item => {
-        intersectionObserver.observe(item);
       })
     }
     return () => {}
   }, [data])
 
-  
+  // 微信小程序的监听者对象
+  const intersectionObserverByWeapp = () => {
+    console.log('还没写～～～')
+  }
+
+  // h5的监听者对象
+  const intersectionObserverByH5 = () => {
+    let intersectionObserver;
+    intersectionObserver = new IntersectionObserver((entries) => {
+      if (data.object.length > 0) {
+
+        // 窗口可视数据条目数
+        // const len = entries.filter(item => item.isIntersecting).length;
+        // const len = 7;
+        console.log('entries=', entries)
+        entries.forEach(item => {
+          const { target: { className }, isIntersecting } = item;
+          const node = className.split(' ')[0];
+          if (node === 'item' && isIntersecting) {
+            intersectionObserver.unobserve(item.target);
+          }
+        })
+      }
+    });
+    itemRef.current.forEach(item => {
+      intersectionObserver.observe(item);
+    })
+  }
 
   return (
     <View className="tabbar-page">
       <Navbar title="测试" />
       <ScrollView
-        className="list" 
+        className="list-test" 
         style={{
           height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
         }} 
         scrollY 
+        onScrollToLower={pageAdd}
       >
         {
           data.object.map((item: any, index) => 
@@ -113,13 +119,13 @@ const Test = () => {
               ref={setRef}
             >
               <LazyImg 
-                name={`img-${index}`}
                 url={item.image} 
+                name={`img-${index}`}
+                parentName="list-test"
               />
             </View>
           )
         }
-        <View className="loading" ref={loadingRef}>加载中...</View>
       </ScrollView>
     </View>
   )

@@ -1,6 +1,15 @@
-.img {
+.lazy-img {
   width: 150px;
   height: 150px;
   transition: all 1s;
-  background: #f7f7f7;
+  background: #DCDCDC;
+}
+
+.no-compatible {
+  font-size: 28px;
+  text-align: center;
+  line-height: 150px;
+}
+.no-compatible::after {
+  content: '暂不支持';
 }
