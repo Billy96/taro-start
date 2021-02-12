@@ -79,7 +79,6 @@ const config = {
       }
     },
     prerender: {
-      match: 'pages/layout/**',
     }
   },
   h5: {

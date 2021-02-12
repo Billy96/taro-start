@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './pages/home/home';
 import Test from './pages/test/test';
+import Virtualize from './pages/virtualize/virtualize';
 import User from './pages/user/user';
 import { tabbarColor, tabbarSelectedColor } from './assets/css/var.scss';
 import { 
@@ -8,6 +9,8 @@ import {
   homeActive,
   test,
   testActive,
+  virtualize,
+  virtualizeActive,
   user,
   userActive
 } from '@/assets/image';
@@ -35,9 +38,9 @@ export default [
     selectedIconPath: homeActive,
     color,
     selectedColor,
-    current: true,
+    current: false,
     component: <Home key="home" />,
-    load: true
+    load: false
   },
   {
     name: '测试',
@@ -49,6 +52,17 @@ export default [
     current: false,
     component: <Test key="test" />,
     load: false
+  },
+  {
+    name: '虚拟滚动',
+    key: 'virtualize',
+    iconPath: virtualize,
+    selectedIconPath: virtualizeActive,
+    color,
+    selectedColor,
+    current: true,
+    component: <Virtualize key="virtualize" />,
+    load: true
   },
   {
     name: '我的',
