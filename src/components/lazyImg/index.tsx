@@ -4,9 +4,7 @@ import { View } from '@tarojs/components';
 import './index.scss';
 
 /**
- * @param {
- *  parentName必须是独有的类名
- * }
+ * @param { parentName: 必须是独有的类名 }
  * */ 
 interface params {
   url: String

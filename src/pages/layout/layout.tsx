@@ -8,7 +8,7 @@ import Shell from './components/shell';
 
 const Layout = () => {
   const [tabbarData, setTabBarData] = useState(tabbarDataInit);
-  const [tabbarIndex, setTabBarIndex] = useState(2);
+  const [tabbarIndex, setTabBarIndex] = useState(0);
 
   const listenTabbar = (key) => {
     let _tabbarData = cloneDeep(tabbarData);
@@ -35,7 +35,7 @@ const Layout = () => {
             width: `${tabbarData.length * 100}vw`,
             transform: `translateX(-${tabbarIndex * 100}vw)`
           }}
-        >
+      >
           {
             tabbarData.map((item, index) => 
               <Shell 
