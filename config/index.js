@@ -1,39 +1,5 @@
 const path = require('path');
 
-// 不同编译环境输出不同文件夹
-let outputRoot = '';
-switch (process.env.TARO_ENV) {
-  case 'weapp':
-    outputRoot = 'dist/weapp';
-    break;
-  case 'alipay':
-    outputRoot = 'dist/alipay';
-    break;
-  case 'swan':
-    outputRoot = 'dist/swan';
-    break;
-  case 'qq':
-    outputRoot = 'dist/qq';
-    break;
-  case 'tt':
-    outputRoot = 'dist/tt';
-    break;
-  case 'jd':
-    outputRoot = 'dist/jd';
-    break;
-  case 'h5':
-    outputRoot = 'dist/h5';
-    break;
-  case 'quickapp':
-    outputRoot = 'dist/quickapp';
-    break;
-  case 'rn':
-    outputRoot = 'dist/rn';
-    break;
-  default:
-    outputRoot = 'dist/fail';
-}
-
 const config = {
   projectName: 'taro-start',
   date: '2020-12-16',
@@ -45,7 +11,7 @@ const config = {
     375: 2 / 1
   },
   sourceRoot: 'src',
-  outputRoot,
+  outputRoot: `dist/${process.env.TARO_ENV}`,
   plugins: [],
   defineConstants: {
   },
