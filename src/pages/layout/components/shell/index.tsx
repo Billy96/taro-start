@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View } from '@tarojs/components';
 
 interface domVal {
@@ -33,7 +33,11 @@ export default ({ dom, data }: params) => {
 
   return (
     <View style={{width: '100vw'}}>
-      {load && dom}
+      {
+        useMemo(() => {
+          if (load) return dom
+        }, [load])
+      }
     </View>
   )
 }
