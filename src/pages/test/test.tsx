@@ -42,34 +42,28 @@ const Test = () => {
   }
 
   return (
-    <View className="tabbar-page">
-      <Navbar title="测试" />
-      <ScrollView
-        className="list-test" 
-        style={{
-          height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
-        }} 
-        scrollY 
-        onScrollToLower={pageAdd}
-      >
-        {
-          data.object.map((item: any, index) => 
-            <View 
-              id={`item-${index}`} 
-              className="item" 
-              style={{height: `100px`}} 
-              key={`item-${index}`} 
-            >
-              <LazyImg 
-                url={item.image} 
-                name={`img-${index}`}
-                parentName="list-test"
-              />
-            </View>
-          )
-        }
-      </ScrollView>
-    </View>
+    <ScrollView
+      className="list-test" 
+      scrollY 
+      onScrollToLower={pageAdd}
+    >
+      {
+        data.object.map((item: any, index) => 
+          <View 
+            id={`item-${index}`} 
+            className="item" 
+            style={{height: `100px`}} 
+            key={`item-${index}`} 
+          >
+            <LazyImg 
+              url={item.image} 
+              name={`img-${index}`}
+              parentName="list-test"
+            />
+          </View>
+        )
+      }
+    </ScrollView>
   )
 }
 

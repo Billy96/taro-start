@@ -43,13 +43,8 @@ const Home = () => {
   }
 
   return (
-    <View className="tabbar-page">
-      <Navbar title="首页" />
-      <ScrollView 
+    <ScrollView 
         className="scroll-view" 
-        style={{
-          height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
-        }} 
         scrollY 
         onScrollToLower={pageAdd} 
       >
@@ -77,7 +72,6 @@ const Home = () => {
           } 
         />
       </ScrollView>
-    </View>
   )
 }
 

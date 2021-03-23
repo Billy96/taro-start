@@ -32,10 +32,20 @@ export default ({ dom, data }: params) => {
   }, [data])
 
   return (
-    <View style={{width: '100vw'}}>
+    <View 
+      style={{ 
+        width: '100vw', 
+        height: '100%', 
+        marginRight: '100vw' 
+      }}
+    >
       {
         useMemo(() => {
-          if (load) return dom
+          if (load) {
+            return dom
+          } else {
+            return <View style={{width: '100vw', height: '10rpx'}}></View>
+          }
         }, [load])
       }
     </View>

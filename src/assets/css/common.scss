@@ -1,9 +1,3 @@
-.tabbar-page {
-  width: 100vw;
-  // 在页面内还需减去 navbarHeight 和 safeAreaHeight
-  height: calc(100vh - #{$tabbarHeight});
-}
-
 .click-hover {
   opacity: 0.6;
 }

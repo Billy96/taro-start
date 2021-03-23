@@ -1,9 +1,13 @@
 import React, { useState, Fragment } from 'react';
+import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import './layout.scss';
+import Navbar from '@/components/navbar';
 import Tabbar from '@/components/tabbar';
 import tabbarDataInit from '../../tabbar.config';
 import cloneDeep from 'lodash/cloneDeep';
+// @ts-ignore
+import { tabbarHeight } from '@/assets/css/var.scss';
 import Shell from './components/shell';
 
 const Layout = () => {
@@ -28,12 +32,18 @@ const Layout = () => {
 
   return (
     <Fragment>
-      <View className="main">
+      <Navbar />
+      <View 
+        className="main" 
+        style={{
+          height: `calc(100vh - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight} - ${tabbarHeight})`
+        }}
+      >
         <View 
           className="main__view flexst" 
           style={{
             width: `${tabbarData.length * 100}vw`,
-            transform: `translateX(-${tabbarIndex * 100}vw)`
+            transform: `translateX(-${tabbarIndex * 200}vw)`
           }}
       >
           {

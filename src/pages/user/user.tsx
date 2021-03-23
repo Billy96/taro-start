@@ -12,18 +12,10 @@ const User = () => {
   }, [])
 
   return (
-    <View className="tabbar-page">
-      <Navbar title="我的" />
-      <ScrollView 
-        style={{
-          height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
-        }} 
-        scrollY
-      >
-        我的...
-        <Navigator url="/pages/demo/exif/exif" style={{marginTop: '20px'}}>exif演示</Navigator>
-      </ScrollView>
-    </View>
+    <ScrollView scrollY style={{width: '100vw'}}>
+      我的...
+      <Navigator url="/pages/demo/exif/exif" style={{marginTop: '20px'}}>exif演示</Navigator>
+    </ScrollView>
   )
 }
 

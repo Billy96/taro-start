@@ -34,26 +34,23 @@ const Virtualize = () => {
   }
 
   return (
-    <View className="tabbar-page">
-      <Navbar />
-      <VirtualList
-        height={500} /* 列表的高度 */
-        width='100%' /* 列表的宽度 */
-        itemData={data} /* 渲染列表的数据 */
-        itemCount={data.length} /*  渲染列表的长度 */
-        itemSize={itemSize} /* 列表单项的高度  */
-        children={Row} /* 列表单项组件，这里只能传入一个组件  */
-        onScroll={({ scrollDirection, scrollOffset }) => {
-          if (
-            !loading &&
-            scrollDirection === 'forward' &&
-            scrollOffset >= ((data.length - 5) * itemSize)
-          ) {
-            pageAdd();
-          }
-        }}
-      />
-    </View>
+    <VirtualList
+      height={500} /* 列表的高度 */
+      width='100vw' /* 列表的宽度 */
+      itemData={data} /* 渲染列表的数据 */
+      itemCount={data.length} /*  渲染列表的长度 */
+      itemSize={itemSize} /* 列表单项的高度  */
+      children={Row} /* 列表单项组件，这里只能传入一个组件  */
+      onScroll={({ scrollDirection, scrollOffset }) => {
+        if (
+          !loading &&
+          scrollDirection === 'forward' &&
+          scrollOffset >= ((data.length - 5) * itemSize)
+        ) {
+          pageAdd();
+        }
+      }}
+    />
   )
 }
 

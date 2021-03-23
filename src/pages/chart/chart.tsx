@@ -42,18 +42,10 @@ const Chart = () => {
   }, [])
 
   return (
-    <View className="tabbar-page">
-      <Navbar title="图表" />
-      <ScrollView 
-        style={{
-          height: `calc(100% - ${Taro.$navbarHeight} - ${Taro.$safeAreaHeight})`
-        }} 
-        scrollY 
-      >
-        {/* @ts-ignore */}
-        <EChart ref={barChartRef} canvasId="bar-canvas" />
-      </ScrollView>
-    </View>
+    <ScrollView scrollY>
+      {/* @ts-ignore */}
+      <EChart ref={barChartRef} canvasId="bar-canvas" />
+    </ScrollView>
   )
 }
 
