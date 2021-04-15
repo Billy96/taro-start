@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
-import { ScrollView, View, Image, Text, Navigator } from '@tarojs/components';
+import { ScrollView, View, Image, Text, Navigator, Button } from '@tarojs/components';
 import { AtLoadMore } from 'taro-ui';
 import Navbar from '@/components/navbar';
 import cloneDeep from 'lodash/cloneDeep';
 import { throttle } from '@/utils/common';
 import ajax from '@/utils/ajax';
+import t from '@/assets/js/test';
 import './home.scss';
 
 const Home = () => {
@@ -17,7 +18,7 @@ const Home = () => {
   const pageSize = 10;
 
   useEffect(() => {
-    console.log('load home')
+    t.hello()
     getList(page > 1 ? false : true);
     return () => {}
   }, [page])
