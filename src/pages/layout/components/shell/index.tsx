@@ -8,7 +8,6 @@ interface domVal {
 interface dataVal {
   key: String
   current: Boolean
-  load: Boolean
 }
 
 interface params {
@@ -23,7 +22,7 @@ export default ({ dom, data }: params) => {
     console.log(`========== load ${dom.key} shell ==========`)
     data.forEach(item => {
       if (item.key === dom.key) {
-        if (item.current || item.load) {
+        if (item.current) {
           setLoad(true);
         }
       }
