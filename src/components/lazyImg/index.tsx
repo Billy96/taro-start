@@ -7,12 +7,12 @@ import './index.scss';
  * @param { parentName: 必须是独有的类名 }
  * */ 
 interface params {
-  url: String
-  name: String
-  parentName: String
+  url: string
+  name: string
+  parentName: string
 }
 
-const LazyImg = ({ url, name, parentName }: params) => {
+export default  ({ url, name, parentName }: params) => {
   const env = process.env.TARO_ENV;
   const imgRef = useRef();
   const [show, setShow] = useState(false);
@@ -81,5 +81,3 @@ const LazyImg = ({ url, name, parentName }: params) => {
     </Fragment>
   )
 }
-
-export default LazyImg;

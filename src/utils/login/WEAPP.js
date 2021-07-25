@@ -16,9 +16,9 @@ module.exports = function (event) {
             sex: '👨'
           });
           Taro.reLaunch({
-            url: '/pages/layout/layout'
+            url: '/pages/home/index'
           })
-        }, 1500)
+        }, 500)
         return
         ajax.default({
           path: '',

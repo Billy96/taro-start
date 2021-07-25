@@ -5,12 +5,12 @@ import './index.scss';
 import { AtIcon } from 'taro-ui';
 
 interface params {
-  title?: String
-  fixed?: Boolean
-  back?: Boolean
+  title?: string
+  fixed?: boolean
+  back?: boolean
 }
 
-const Navbar = ({ title = 'taro多端模版', fixed, back = false }: params) => {
+export default ({ title = 'taro多端模版', fixed, back = false }: params) => {
   const [style, setStyle] = useState({});
 
   useEffect(() => {
@@ -48,5 +48,3 @@ const Navbar = ({ title = 'taro多端模版', fixed, back = false }: params) => 
     </View>
   )
 }
-
-export default Navbar;
